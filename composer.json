@@ -1,0 +1,27 @@
+{
+    "name": "ask/tiny-mce-tiny-images-bundle",
+    "type": "symfony-bundle",
+    "description": "Very simple TinyMCE image manager for Symfony2",
+    "keywords": ["tinymce", "image manager", "symfony2"],
+    "homepage": "https://github.com/A-S-Kozienko/TinyMceTinyImagesBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Kozienko",
+            "email": "a.s.kozienko@gmail.com "
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "2.*",
+        "stfalcon/tinymce-bundle": "dev-master",
+        "vich/uploader-bundle": "dev-master",
+        "avalanche123/imagine-bundle": "*"
+    },
+    "target-dir": "ASK/TinyMceTinyImagesBundle",
+    "autoload": {
+        "psr-0": {
+            "ASK\\TinyMceTinyImagesBundle": ""
+        }
+    }
+}

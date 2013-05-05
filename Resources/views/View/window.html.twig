@@ -1,0 +1,73 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    {% stylesheets
+        'bundles/asktinymcetinyimages/css/style.css'
+
+        filter='cssrewrite,?yui_css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+    {% javascripts
+        '@StfalconTinymceBundle/Resources/public/vendor/tiny_mce/tiny_mce_popup.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/jquery-1.9.1.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/jquery.form.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/mustache.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/observer.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/init.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/uploader.js'
+        '@ASKTinyMceTinyImagesBundle/Resources/public/js/list.js'
+        filter='?yui_js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <title>Image Manager</title>
+</head>
+<body>
+    <script type="text/javascript">
+        $(function(){
+            var list = new TMTI.List({
+                containerSelector: '#image-list',
+                imageSelector: '[data-image="box"]',
+                removeSelector: '[data-image="remove"]',
+                insertSelector: '[data-image="insert"]',
+                listUrl: '{{ path("ask_tinymcetinyimages_browser_list") }}',
+                removeUrl: '{{ path("ask_tinymcetinyimages_browser_remove", {'id': 'image-id'}) }}',
+                imageTemplate: $('#image-template').html()
+            });
+
+            var uploader = new TMTI.Uploader({
+                formSelector: '#upload-form',
+                fileFieldSelector: 'input[type="file"]'
+            });
+
+            uploader.addListener(function(image) {
+                list.add(image);
+            });
+
+            list.addListener(function(image) {
+                var html = '<img src="' + image.source + '">';
+                tinyMCEPopup.execCommand('mceInsertContent', false, html);
+                tinyMCEPopup.close();
+            });
+        });
+    </script>
+    <script id="image-template" type="text/x-mustache-template">
+        <div data-image="box" class="image">
+            <a data-image="remove" class="remove" href="#remove" title="remove image">×</a>
+            <a data-image="insert" class="insert" href="#insert"><img src="[[ thumbnail ]]"></a>
+        </div>
+    </script>
+    <form id="upload-form" action="{{ path("ask_tinymcetinyimages_browser_upload") }}" method="post" enctype="{{ form_enctype(form) }}">
+        {{ form_widget(form) }}
+    </form>
+    <hr>
+    <div id="image-list"></div>
+</body>
+</html>
+{% endspaceless %}

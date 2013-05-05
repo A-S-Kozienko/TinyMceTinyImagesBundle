@@ -1,0 +1,3 @@
+ask_tiny_mce_tiny_images_browser_controller:
+    resource: "ASK\\TinyMceTinyImagesBundle\\Controller\\BrowserController"
+    type: annotation

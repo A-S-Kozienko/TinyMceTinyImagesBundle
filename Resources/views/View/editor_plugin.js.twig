@@ -1,0 +1,35 @@
+(function() {
+    tinymce.create('tinymce.plugins.ImagesPlugin', {
+        init : function(ed, url) {
+            ed.addCommand('tinymcetinyimages_manager', function() {
+                ed.windowManager.open({
+                    file : '{{ path("ask_tinymcetinyimages_browser_window") }}',
+                    width : 600,
+                    height : 450,
+                    inline: true,
+                    popup_css : false
+                }, {
+                    plugin_url : url
+            });
+        });
+
+        ed.addButton('tinymcetinyimages', {
+                title : 'Images Manager',
+                cmd : 'tinymcetinyimages_manager',
+                image : '{{ asset("/bundles/asktinymcetinyimages/images/icon.gif") }}'
+            });
+        },
+
+        getInfo : function() {
+            return {
+                longname : 'Images Manager',
+                author : 'Alex Ko.',
+                authorurl : 'http://github.com/A-S-Kozienko',
+                infourl : 'http://github.com/A-S-Kozienko/TinyMceTinyImagesBundle',
+                version : '1'
+            };
+        }
+    });
+
+    tinymce.PluginManager.add('tinymcetinyimages', tinymce.plugins.ImagesPlugin);
+})();
